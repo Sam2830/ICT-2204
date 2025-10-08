@@ -29,3 +29,153 @@ mysql> SHOW TABLES;
 +-----------------+
 1 row in set (0.00 sec)
 
+mysql> DESC STUDENT;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| STUDENT_ID   | int         | YES  |     | NULL    |       |
+| STUDENT_NAME | varchar(30) | YES  |     | NULL    |       |
+| CGPA         | float(5,2)  | YES  |     | NULL    |       |
+| GENDER       | varchar(7)  | YES  |     | NULL    |       |
+| HALL         | varchar(20) | YES  |     | NULL    |       |
+| SESSION      | varchar(10) | YES  |     | NULL    |       |
+| CONTACT      | varchar(15) | YES  |     | NULL    |       |
+| DOB          | date        | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+mysql> CREATE TABLE(COURSE_NO INT NOT NULL, COURSE_NAME VARCHAR(10));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(COURSE_NO INT NOT NULL, COURSE_NAME VARCHAR(10))' at line 1
+mysql>  CREATE TABLE(COURSE_NUMBER INT NOT NULL, COURSE_NAME VARCHAR(10));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(COURSE_NUMBER INT NOT NULL, COURSE_NAME VARCHAR(10))' at line 1
+mysql>  CREATE TABLE COURSE(COURSE_NO INT NOT NULL, COURSE_NAME VARCHAR(10));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO COURSE (COURSE_NO,COURSE_NAME) VALUES(2204,'DBMS');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM COURSE;
++-----------+-------------+
+| COURSE_NO | COURSE_NAME |
++-----------+-------------+
+|      2204 | DBMS        |
++-----------+-------------+
+1 row in set (0.00 sec)
+
+mysql> CREATE TABLE COURSES(COURSE_NO INT, COURSE_NAME VARCHAR(10), UNIQUE(COURSE_NO));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> DROP TABLE COURSES;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CREATE TABLE COURSES(COURSE_NO INT, COURSE_NAME VARCHAR(10), CONSTRAINT uc_course_id UNIQUE(COURSE_NO));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> INSERT INTO COURSES (COURSE_NO,COURSE_NAME) VALUES(2101,'DSA');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO COURSES (COURSE_NO,COURSE_NAME) VALUES(2103,'DLD');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM COURSES;
++-----------+-------------+
+| COURSE_NO | COURSE_NAME |
++-----------+-------------+
+|      2101 | DSA         |
+|      2103 | DLD         |
++-----------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> CREATE TABLE COURSES(COURSE_NO INT, COURSE_NAME VARCHAR(10), CONSTRAINT uc_course_id NOT NULL(COURSE_NO));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'NOT NULL(COURSE_NO))' at line 1
+mysql> CREATE TABLE COURSES(COURSE_NO INT, COURSE_NAME VARCHAR(10), CONSTRAINT uc_course_id PRIMARY(COURSE_NO));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(COURSE_NO))' at line 1
+mysql> CREATE TABLE COURSES(COURSE_NO INT NOT NULL, COURSE_NAME VARCHAR(10), CONSTRAINT uc_course_id UNIQUE(COURSE_NAME));
+ERROR 1050 (42S01): Table 'courses' already exists
+mysql> CREATE TABLE COURSE_EXCLUSIVE(COURSE_NO INT NOT NULL, COURSE_NAME VARCHAR(10), CONSTRAINT uc_course_id UNIQUE(COURSE_NAME));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> INSERT INTO COURSE_EXCLUSIVE (COURSE_NO,COURSE_NAME) VALUES(2105,'NA');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO COURSE_EXCLUSIVE (COURSE_NO,COURSE_NAME) VALUES( ,'NA');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ','NA')' at line 1
+mysql> INSERT INTO COURSE_EXCLUSIVE (COURSE_NO,COURSE_NAME) VALUES( 2107,'STAT');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM COURSE_EXCLUSIVE;
++-----------+-------------+
+| COURSE_NO | COURSE_NAME |
++-----------+-------------+
+|      2105 | NA          |
+|      2107 | STAT        |
++-----------+-------------+
+2 rows in set (0.00 sec)
+
+mysql>  CREATE TABLE COURSE_LAST(COURSE_NO INT, COURSE_NAME VARCHAR(10), PRIMARY KEY(COURSE_NO));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql>  INSERT INTO COURSE_LAST (COURSE_NO,COURSE_NAME) VALUES(2101,'DSA');
+Query OK, 1 row affected (0.01 sec)
+
+mysql>  INSERT INTO COURSE_LAST (COURSE_NO,COURSE_NAME) VALUES(2102,'DSAl');
+Query OK, 1 row affected (0.00 sec)
+
+mysql>  INSERT INTO COURSE_LAST (COURSE_NO,COURSE_NAME) VALUES(2102,'DSAl');
+ERROR 1062 (23000): Duplicate entry '2102' for key 'course_last.PRIMARY'
+mysql> SELECT * FROM COURSE_LAST;
++-----------+-------------+
+| COURSE_NO | COURSE_NAME |
++-----------+-------------+
+|      2101 | DSA         |
+|      2102 | DSAl        |
++-----------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> DROP TABLE COURSE_LAST;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql>  CREATE TABLE COURSE_LAST(COURSE_NO INT PRIMARY KEY, COURSE_NAME VARCHAR(10));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql>  INSERT INTO COURSE_LAST (COURSE_NO,COURSE_NAME) VALUES(2101,'DSA');
+Query OK, 1 row affected (0.00 sec)
+
+mysql>  INSERT INTO COURSE_LAST (COURSE_NO,COURSE_NAME) VALUES(2102,'DSAl');
+Query OK, 1 row affected (0.01 sec)
+
+mysql>  INSERT INTO COURSE_LAST (COURSE_NO,COURSE_NAME) VALUES(2101,'DSA');
+ERROR 1062 (23000): Duplicate entry '2101' for key 'course_last.PRIMARY'
+mysql> SELECT * FROM COURSE_LAST;
++-----------+-------------+
+| COURSE_NO | COURSE_NAME |
++-----------+-------------+
+|      2101 | DSA         |
+|      2102 | DSAl        |
++-----------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> DROP TABLE COURSE_LAST;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CREATE TABLE COURSE_LAST(COURSE_NO INT, COURSE_NAME VARCHAR(10), CONSTRAINT uc_course_id PRIMARY KEY(COURSE_NO));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql>  INSERT INTO COURSE_LAST (COURSE_NO,COURSE_NAME) VALUES(2107,'STAT');
+Query OK, 1 row affected (0.00 sec)
+
+mysql>  INSERT INTO COURSE_LAST (COURSE_NO,COURSE_NAME) VALUES(2109,'DC');
+Query OK, 1 row affected (0.00 sec)
+
+mysql>  INSERT INTO COURSE_LAST (COURSE_NO,COURSE_NAME) VALUES(2109,'STAT');
+ERROR 1062 (23000): Duplicate entry '2109' for key 'course_last.PRIMARY'
+mysql> SELECT * FROM COURSE_LAST;
++-----------+-------------+
+| COURSE_NO | COURSE_NAME |
++-----------+-------------+
+|      2107 | STAT        |
+|      2109 | DC          |
++-----------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> exit
