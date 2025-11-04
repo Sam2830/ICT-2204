@@ -1,0 +1,61 @@
+mysql> CREATE DATABASE LIBRARY;
+Query OK, 1 row affected (0.14 sec)
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| ict_52             |
+| information_schema |
+| library            |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+8 rows in set (0.10 sec)
+
+mysql> USE LIBRARY
+Database changed
+mysql> CREATE TABLE BOOKS(BOOK_NAME VARCHAR(30),BOOK_TYPE VARCHAR(15), AUTHOR VARCHAR(20),DOP DATE, IN_STOCK INT);
+Query OK, 0 rows affected (0.20 sec)
+
+mysql> INSERT INTO BOOKS(BOOK_NAME, BOOK_TYPE, AUTHOR,DOP, IN_STOCK) VALUES('1984','DYSTOPIAN SOCIAL SCIENCE','GEORGE ORWELL',3);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> INSERT INTO BOOKS(BOOK_NAME, BOOK_TYPE, AUTHOR,DOP, IN_STOCK) VALUES('1984','DYSTOPIAN SOCIAL SCIENCE','GEORGE ORWELL',1984,3);
+ERROR 1406 (22001): Data too long for column 'BOOK_TYPE' at row 1
+mysql> INSERT INTO BOOKS(BOOK_NAME, BOOK_TYPE, AUTHOR,DOP, IN_STOCK) VALUES('1984','DYSTOPIAN SOCIAL SCIENCE','GEORGE ORWELL',20,3);
+ERROR 1406 (22001): Data too long for column 'BOOK_TYPE' at row 1
+mysql> INSERT INTO BOOKS(BOOK_NAME, BOOK_TYPE, AUTHOR,DOP, IN_STOCK) VALUES('1984','DYSTOPIAN SS','GEORGE ORWELL',1984,3);
+ERROR 1292 (22007): Incorrect date value: '1984' for column 'DOP' at row 1
+mysql> INSERT INTO BOOKS(BOOK_NAME, BOOK_TYPE, AUTHOR,DOP, IN_STOCK) VALUES('1984','DYSTOPIAN SS','GEORGE ORWELL','1984-01-01',3);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> INSERT INTO BOOKS(BOOK_NAME, BOOK_TYPE, AUTHOR,DOP, IN_STOCK) VALUES('Pride and Prejudice','Romance Novel','Jane Austen','1813-04-11',5);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> INSERT INTO BOOKS(BOOK_NAME, BOOK_TYPE, AUTHOR,DOP, IN_STOCK) VALUES('The Alchemist','Quest Adventure Novel','Paulo Coelho','1988-06-07',20);
+ERROR 1406 (22001): Data too long for column 'BOOK_TYPE' at row 1
+mysql> INSERT INTO BOOKS(BOOK_NAME, BOOK_TYPE, AUTHOR,DOP, IN_STOCK) VALUES('The Alchemist','Adventure Novel','Paulo Coelho','1988-06-07',20);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> INSERT INTO BOOKS(BOOK_NAME, BOOK_TYPE, AUTHOR,DOP, IN_STOCK) VALUES('To Kill a Mockingbird','Gothic Novel','Harper Lee','1960-11-25',7);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> INSERT INTO BOOKS(BOOK_NAME, BOOK_TYPE, AUTHOR,DOP, IN_STOCK) VALUES('A Tale of Two Cities','Historic Novel','Charles Dickens','1859-07-17',30);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> SELECT *  FROM BOOKS;
++-----------------------+-----------------+-----------------+------------+----------+
+| BOOK_NAME             | BOOK_TYPE       | AUTHOR          | DOP        | IN_STOCK |
++-----------------------+-----------------+-----------------+------------+----------+
+| 1984                  | DYSTOPIAN SS    | GEORGE ORWELL   | 1984-01-01 |        3 |
+| Pride and Prejudice   | Romance Novel   | Jane Austen     | 1813-04-11 |        5 |
+| The Alchemist         | Adventure Novel | Paulo Coelho    | 1988-06-07 |       20 |
+| To Kill a Mockingbird | Gothic Novel    | Harper Lee      | 1960-11-25 |        7 |
+| A Tale of Two Cities  | Historic Novel  | Charles Dickens | 1859-07-17 |       30 |
++-----------------------+-----------------+-----------------+------------+----------+
+5 rows in set (0.00 sec)
+
+mysql> notee
